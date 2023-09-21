@@ -80,7 +80,7 @@
                         <ul class="navbar-nav ml-auto">
 
                             <li class="nav-item dropdown no-arrow mx-1">
-                                <a class="nav-link dropdown-toggle" href="/home" id="alertsDropdown">
+                                <a class="nav-link dropdown-toggle" href="{{ route('login.page') }}" id="alertsDropdown">
                                     <button class="btn btn-light font-weight-bold shadow">Masuk</button>
                                 </a>
                             </li>
