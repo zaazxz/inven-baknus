@@ -73,6 +73,15 @@
     </li>
     {{-- Nav Item : End --}}
 
+    {{-- Nav Item : Start --}}
+    <li class="nav-item {{ str_contains($url, 'pengguna') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('pengguna.index') }}">
+            <i class="fa-solid fa-user"></i>
+            <span>Pengguna</span>
+        </a>
+    </li>
+    {{-- Nav Item : End --}}
+
     <!-- Divider -->
     {{-- <hr class="sidebar-divider d-none d-md-block"> --}}
 

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LokasiController;
+use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\InventarisController;
 use App\Http\Controllers\PeminjamanController;
 
@@ -42,4 +43,9 @@ Route::prefix('lokasi')->group(function() {
 Route::prefix('peminjaman')->group(function() {
     Route::get('/', [PeminjamanController::class, 'index'])->name('peminjaman.index');
     Route::get('/create', [PeminjamanController::class, 'create'])->name('peminjaman.create');
+});
+
+Route::prefix('pengguna')->group(function() {
+    Route::get('/', [PenggunaController::class, 'index'])->name('pengguna.index');
+    Route::get('/create', [PenggunaController::class, 'create'])->name('pengguna.create');
 });
