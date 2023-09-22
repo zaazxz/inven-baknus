@@ -99,6 +99,9 @@
         </div>
     </div>
 
+    {{-- Sweetalert --}}
+    @include('sweetalert::alert')
+
     {{-- Bootstrap Javascript --}}
     <script src="{{ asset('jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.min.js') }}"></script>
@@ -123,8 +126,37 @@
     <script src="{{ asset('js/script.js') }}"></script>
     <script>
         $(document).ready(function () {
-            $('.tableData').dataTable();
+            $('.tableData').dataTable({
+                "columnDefs": [{
+                        width: 200,
+                        targets: 1
+                    },
+                    {
+                        width: 200,
+                        targets: 2
+                    }
+                ],
+            });
         });
+
+        // Vanilla Javascript
+        function previewImage() {
+            const image = document.querySelector("#picture");
+            const imgPreview = document.querySelector("#image");
+            const placeholder = document.querySelector("#placeholderImage");
+
+            imgPreview.style.display = 'block';
+
+            const oFReader = new FileReader();
+            oFReader.readAsDataURL(image.files[0]);
+
+            oFReader.onload = function(oFREvent) {
+                imgPreview.src = oFREvent.target.result;
+            }
+
+            placeholder.innerHTML = 'Added File!';
+
+        }
     </script>
     @yield('script')
 

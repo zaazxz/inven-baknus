@@ -47,5 +47,12 @@ Route::prefix('peminjaman')->group(function() {
 
 Route::prefix('pengguna')->group(function() {
     Route::get('/', [PenggunaController::class, 'index'])->name('pengguna.index');
+    Route::get('/administrator', [PenggunaController::class, 'administrator'])->name('pengguna.administrator');
+    Route::get('/laboran', [PenggunaController::class, 'laboran'])->name('pengguna.laboran');
+    Route::get('/pj', [PenggunaController::class, 'pj'])->name('pengguna.pj');
     Route::get('/create', [PenggunaController::class, 'create'])->name('pengguna.create');
+    Route::get('/edit/{id}', [PenggunaController::class, 'edit'])->name('pengguna.edit');
+    Route::get('/update/{user}', [PenggunaController::class, 'update'])->name('pengguna.update');
+    Route::post('/store', [PenggunaController::class, 'store'])->name('pengguna.store');
+    Route::get('/destroy/{id}', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');
 });

@@ -46,7 +46,7 @@
         {{-- Form Data : Start --}}
         <div class="col-lg-6 col-md-12 my-2 mb-3">
             <div class="card p-3">
-                <form action="{{ route('pengguna.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('pengguna.update', $data->id) }}" method="put" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="name" class="ml-1">Masukkan Nama Anda : </label>
@@ -55,9 +55,10 @@
                     class="form-control form-control-user @error('name') is-invalid @enderror"
                     id="name"
                     placeholder="Masukkan Nama Anda"
-                    name="name">
+                    name="name"
+                    value="{{ $data->name }}">
                     </div>
-                    @error('name') is-invalid @enderror
+                    @error('name') {{ $message }} @enderror
                 <div class="form-group">
                     <label for="email" class="ml-1">Masukkan Email Anda : </label>
                     <input
@@ -65,17 +66,21 @@
                     class="form-control form-control-user @error('email') is-invalid @enderror"
                     id="email"
                     placeholder="Masukkan Email Anda"
-                    name="email">
-                    @error('email') is-invalid @enderror
+                    name="email"
+                    value="{{ $data->email }}"
+                    disabled>
+                    @error('email') {{ $message }} @enderror
                 </div>
                 <div class="form-group">
                     <label for="role">Pilih Role</label>
                     <select class="form-control form-control-user" id="role" name="role">
-                        <option value="Administrator">Administrator</option>
-                        <option value="Laboran" selected>Laboran</option>
-                        <option value="Penanggung Jawab">Penanggung Jawab</option>
+                        <option value="Administrator" {{ ($data->role == 'Administrator') ? 'selected' : '' }}>Administrator</option>
+                        <option value="Laboran" {{ ($data->role == 'Laboran') ? 'selected' : '' }}>Laboran</option>
+                        <option value="Penanggung Jawab" {{ ($data->role == 'Penanggung Jawab') ? 'selected' : '' }}>Penanggung Jawab</option>
                     </select>
                 </div>
+                @error('role') {{ $message }} @enderror
+                @error('password') {{ $message }} @enderror
             </div>
         </div>
         {{-- Form Data : End --}}
@@ -87,12 +92,12 @@
                     <label for="picture" class="ml-1">Masukkan Gambar : </label>
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="picture" name="picture" onchange="previewImage()">
-                        <label class="custom-file-label" for="picture" id="placeholderImage">Choose File</label>
+                        <label class="custom-file-label" for="picture" id="placeholderImage">Gambar Sebelumnya</label>
                     </div>
                     </div>
                     <div class="row">
                         <div class="col-12 border d-flex justify-content-center py-4">
-                        <img src="{{ asset('image/assets/dummy.png') }}" width="120px;" id="image">
+                        <img src="{{ asset('storage/' . $data->picture) }}" width="120px;" id="image">
                     </div>
                 </div>
             </div>
