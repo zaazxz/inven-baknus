@@ -86,7 +86,7 @@
 
         {{-- Form Data : Start --}}
         <div class="col-lg-6 col-md-12 my-2">
-            <form action="{{ route('inven.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('inven.update', $inven->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="card p-3">
                 <div class="row">
@@ -99,7 +99,7 @@
                             id="kode_barang"
                             placeholder="Masukkan Kode Barang"
                             name="kode_barang"
-                            required>
+                            value="{{ $inven->kode_barang ?? '' }}">
                         </div>
                         @error('kode_barang') {{ $message }} @enderror
                     </div>
@@ -111,7 +111,8 @@
                             class="form-control form-control-user @error('no_seri') is-invalid @enderror"
                             id="no_seri"
                             name="no_seri"
-                            placeholder="Masukkan Nomor Seri">
+                            placeholder="Masukkan Nomor Seri"
+                            value="{{ $inven->no_seri ?? '' }}">
                         </div>
                         @error('no_seri') {{ $message }} @enderror
                     </div>
@@ -124,7 +125,7 @@
                     id="nama_barang"
                     name="nama_barang"
                     placeholder="Masukkan Nama Barang"
-                    required>
+                    value="{{ $inven->nama_barang ?? '' }}">
                 </div>
                 @error('nama_barang') {{ $message }} @enderror
                 <div class="form-group">
@@ -134,7 +135,8 @@
                     class="form-control form-control-user @error('merk') is-invalid @enderror"
                     id="merk"
                     name="merk"
-                    placeholder="Masukkan Merk Barang">
+                    placeholder="Masukkan Merk Barang"
+                    value="{{ $inven->merk ?? '' }}">
                 </div>
                 @error('merk') {{ $message }} @enderror
             </div>
@@ -151,7 +153,7 @@
                             id="tahun"
                             placeholder="Masukkan Tahun Penambahan"
                             name="tahun"
-                            required>
+                            value="{{ $inven->tahun ?? '' }}">
                         </div>
                         @error('tahun') {{ $message }} @enderror
                     </div>
@@ -163,7 +165,8 @@
                             class="form-control form-control-user @error('jumlah') is-invalid @enderror"
                             id="jumlah"
                             name="jumlah"
-                            placeholder="Masukkan Jumlah Penambahan">
+                            placeholder="Masukkan Jumlah Penambahan"
+                            value="{{ $inven->jumlah ?? '' }}">
                         </div>
                         @error('jumlah') {{ $message }} @enderror
                     </div>
@@ -171,14 +174,20 @@
                 <div class="form-group">
                     <label for="kondisi" class="ml-1">Kondisi Penambahan : </label>
                     <select class="form-control form-control-user" id="kondisi" name="kondisi">
-                        <option value="Baru">Baru</option>
-                        <option value="Bekas">Bekas</option>
+                        @if ($inven->kondisi == 'Baru')
+                            <option value="{{ $inven->kondisi }}">{{ $inven->kondisi }}</option>
+                            <option value="Bekas">Bekas</option>
+                        @else
+                        <option value="{{ $inven->kondisi }}">{{ $inven->kondisi }}</option>
+                            <option value="Baru">Baru</option>
+                        @endif
                     </select>
                     @error('kondisi') {{ $message }} @enderror
                 </div>
                 <div class="form-group">
                     <label for="lokasi_id" class="ml-1">Masukkan Lokasi Penyimpanan : </label>
                     <select class="form-control form-control-user" id="lokasi_id" name="lokasi_id">
+                            <option value="{{ $inven->lokasi_id }}">{{ $inven->lokasi->nama_lokasi }}</option>
                         @foreach ($lokasi as $lokasi)
                             <option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>
                         @endforeach
@@ -204,7 +213,7 @@
         {{-- Form Spesifikasi : Start --}}
         <div class="col-12 my-2">
             <div class="card p-3">
-                <input id="spesifikasi" type="hidden" name="spesifikasi">
+                <input id="spesifikasi" type="hidden" name="spesifikasi" value="{!! $inven->spesifikasi !!}">
                 <trix-editor input="spesifikasi" style="height: 200px;"></trix-editor>
             </div>
         </div>
@@ -225,8 +234,10 @@
         {{-- Form Keterangan : Start --}}
         <div class="col-12 my-2">
             <div class="card p-3">
-                <input id="keterangan" type="hidden" name="keterangan">
-                <trix-editor input="keterangan" style="height: 200px;"></trix-editor>
+                <input id="keterangan" type="hidden" name="keterangan" value="{!! $inven->keterangan!!}">
+                <trix-editor input="keterangan" style="height: 200px;">
+
+                </trix-editor>
             </div>
         </div>
         {{-- Form Keterangan : End --}}
@@ -252,15 +263,22 @@
                 method: 'GET',
                 success: function(data) {
 
-                    // Kode Changed
+                    // Kode Changed on Kode Barang
                     $('#kode_barang').on('input', function() {
-                        if (data.kode_barang >= $('#kode_barang').val()) {
+                        if (data.kode_barang > $('#kode_barang').val()) {
                             $('#kode_barang').addClass('is-invalid');
                         } else {
                             $('#kode_barang').removeClass('is-invalid');
                         }
+                    });
 
-                        console.log($('#kode_barang').val());
+                    // Kode Changed on Jumlah
+                    $('#jumlah').on('input', function() {
+                        if (data.stok >= $('#jumlah').val()) {
+                            $('#jumlah').addClass('is-invalid');
+                        } else {
+                            $('#jumlah').removeClass('is-invalid');
+                        }
                     });
 
                 },

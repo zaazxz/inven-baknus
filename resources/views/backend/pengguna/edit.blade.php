@@ -79,6 +79,23 @@
                         <option value="Penanggung Jawab" {{ ($data->role == 'Penanggung Jawab') ? 'selected' : '' }}>Penanggung Jawab</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="lokasi">Pilih Lokasi</label>
+                    <select class="form-control form-control-user" id="lokasi" name="lokasi_id">
+                        @if ($data->lokasi_id)
+                            <option value="{{ $data->lokasi_id }}">{{ $data->lokasi->nama_lokasi ?? '' }}</option>
+                            <option value=""></option>
+                            @foreach ($lokasi as $lokasi)
+                                <option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>
+                            @endforeach
+                        @elseif(!$data->lokasi_id)
+                                <option value="" selected></option>
+                            @foreach ($lokasi_null as $lokasi)
+                                <option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>
+                            @endforeach
+                        @endif
+                    </select>
+                </div>
             </div>
         </div>
         {{-- Form Data : End --}}

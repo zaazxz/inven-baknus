@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use App\Models\Lokasi;
+use App\Models\Inventaris;
 use Illuminate\Support\Str;
 use Illuminate\Support\Carbon;
 use Illuminate\Database\Seeder;
@@ -21,6 +22,7 @@ class DatabaseSeeder extends Seeder
             'name'              => 'Administrator',
             'email'             => 'admin@iotech.id',
             'role'              => 'Administrator',
+            'lokasi_id'         => NULL,
             'picture'           => NULL,
             'remember_token'    => Str::random(10),
             'password'          => bcrypt('admin123'),
@@ -32,6 +34,7 @@ class DatabaseSeeder extends Seeder
             'name'              => 'Mirza',
             'email'             => 'mirza@iotech.id',
             'role'              => 'Laboran',
+            'lokasi_id'         => 1,
             'picture'           => NULL,
             'remember_token'    => Str::random(10),
             'password'          => bcrypt('laboran123'),
@@ -43,6 +46,36 @@ class DatabaseSeeder extends Seeder
         Lokasi::create([
             'user_id'       => 2,
             'nama_lokasi'   => 'Sarana Prasarana',
+            'created_at'    => Carbon::now(),
+            'updated_at'    => NULL
+        ]);
+
+        // $table->id();
+        // $table->string('kode_barang');
+        // $table->string('nama_barang');
+        // $table->string('merk');
+        // $table->string('spesifikasi');
+        // $table->string('no_seri');
+        // $table->string('tahun');
+        // $table->string('jumlah');
+        // $table->string('kondisi');
+        // $table->string('status');
+        // $table->foreignId('lokasi_id');
+        // $table->timestamps();
+
+        Inventaris::create([
+            'kode_barang'   => '001',
+            'nama_barang'   => 'Laptop Asus Zephyrus',
+            'merk'          => 'Asus',
+            'spesifikasi'   => 'Ram 32GB, SSD 1TB, INTEL CORE 19 13900-K',
+            'no_seri'       => 'A4X1700',
+            'tahun'         => '2023',
+            'jumlah'        => 3,
+            'stok'          => 3,
+            'kondisi'       => 'Baru',
+            'status'        => 'Tersedia',
+            'lokasi_id'     => 1,
+            'keterangan'    => NULL,
             'created_at'    => Carbon::now(),
             'updated_at'    => NULL
         ]);

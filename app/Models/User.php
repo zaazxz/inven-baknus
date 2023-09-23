@@ -27,7 +27,7 @@ class User extends Authenticatable
     ];
 
     public function lokasi() {
-        return $this->hasMany(Lokasi::class);
+        return $this->belongsTo(Lokasi::class);
     }
 
 }

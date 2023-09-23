@@ -44,6 +44,14 @@ Route::group(['middleware' => ['auth', 'role:Administrator,Laboran,Penanggung Ja
         Route::get('/tidak', [InventarisController::class, 'tidak'])->name('inven.tidak');
         Route::get('/maintenance', [InventarisController::class, 'maintenance'])->name('inven.maintenance');
         Route::get('/create', [InventarisController::class, 'create'])->name('inven.create');
+        Route::get('/edit/{inventaris}', [InventarisController::class, 'edit'])->name('inven.edit');
+        Route::get('/destroy/{inventaris}', [InventarisController::class, 'destroy'])->name('inven.destroy');
+        Route::post('/store', [InventarisController::class, 'store'])->name('inven.store');
+        Route::post('/update/{inventaris}', [InventarisController::class, 'update'])->name('inven.update');
+
+        // getting Code
+        Route::get('/getcode', [InventarisController::class, 'code'])->name('getvaluecode');
+
     });
 
     // Lokasi

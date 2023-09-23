@@ -14,7 +14,11 @@ class Lokasi extends Model
     protected $guarded = ['id'];
 
     public function user() {
-        return $this->belongsTo(User::class);
+        return $this->hasMany(User::class);
+    }
+
+    public function inventaris() {
+        return $this->hasMany(Inventaris::class);
     }
 
 }

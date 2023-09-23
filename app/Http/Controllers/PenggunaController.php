@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Models\Lokasi;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -62,6 +63,7 @@ class PenggunaController extends Controller
             'title'         => 'Data Pengguna Baru',
             'title_header'  => 'Tambah Data Pengguna',
             'halaman'       => 'Tambah Data',
+            'lokasi'        => Lokasi::all()
         ]);
     }
 
@@ -72,6 +74,7 @@ class PenggunaController extends Controller
             'name'      => 'required',
             'email'     => 'required|unique:users|email',
             'role'      => 'required',
+            'lokasi_id' => '',
             'picture'   => 'image|file|mimes:jpeg,png,jpg,gif,svg|max:2000'
         ]);
 
@@ -113,11 +116,16 @@ class PenggunaController extends Controller
     // View Edit
     public function edit(string $id)
     {
+
+        $lokasi = User::select('lokasi_id')->where('id', $id)->get();
+
         return view('backend.pengguna.edit', [
             'title'         => 'Edit Data Pengguna',
             'title_header'  => 'Edit Data Pengguna',
             'halaman'       => 'Edit Data',
-            'data'          => User::where('id', $id)->first()
+            'data'          => User::where('id', $id)->first(),
+            'lokasi'        => Lokasi::where('id', '!===', $lokasi)->get(),
+            'lokasi_null'   => Lokasi::all()
         ]);
     }
 
@@ -130,6 +138,7 @@ class PenggunaController extends Controller
             'name'      => '',
             'role'      => '',
             'email'     => '',
+            'lokasi_id' => '',
             'picture'   => 'image|file|mimes:jpeg,png,jpg,gif,svg|max:2000'
         ];
 

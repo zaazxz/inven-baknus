@@ -76,6 +76,15 @@
                         <option value="Penanggung Jawab">Penanggung Jawab</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label for="lokasi">Pilih Lokasi</label>
+                    <select class="form-control form-control-user" id="lokasi" name="lokasi_id">
+                        <option selected></option>
+                        @foreach ($lokasi as $lokasi)
+                            <option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
         </div>
         {{-- Form Data : End --}}
@@ -91,7 +100,7 @@
                     </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 border d-flex justify-content-center py-4">
+                        <div class="col-12 border d-flex justify-content-center py-5">
                         <img src="{{ asset('image/assets/dummy.png') }}" width="120px;" id="image">
                     </div>
                 </div>

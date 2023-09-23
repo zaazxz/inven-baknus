@@ -18,6 +18,7 @@ return new class extends Migration
             $table->enum('role', ['Administrator', 'Laboran', 'Penanggung Jawab']);
             $table->string('picture')->nullable();
             $table->string('password')->nullable();
+            $table->foreignId('lokasi_id')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
