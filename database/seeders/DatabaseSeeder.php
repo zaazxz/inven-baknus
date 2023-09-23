@@ -41,7 +41,7 @@ class DatabaseSeeder extends Seeder
 
         // Creating Default Location
         Lokasi::create([
-            'user_id'       => NULL,
+            'user_id'       => 2,
             'nama_lokasi'   => 'Sarana Prasarana',
             'created_at'    => Carbon::now(),
             'updated_at'    => NULL

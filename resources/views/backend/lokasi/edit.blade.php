@@ -45,7 +45,7 @@
 
         {{-- Form Data : Start --}}
         <div class="col-12 my-2 mb-3">
-            <form action="{{ route('lokasi.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('lokasi.update', $data->id) }}" method="post" enctype="multipart/form-data">
             @csrf
             <div class="card p-3">
                     <div class="form-group">
@@ -56,13 +56,13 @@
                         id="nama"
                         placeholder="Masukkan Nama Lokasi"
                         name="nama_lokasi"
-                        required>
+                        value="{{ $data->nama_lokasi }}">
                     </div>
                     <div class="form-group">
                         <label for="penanggung_jawab">Pilih Penanggung Jawab</label>
                         <select class="form-control form-control-user" id="penanggung_jawab" name="user_id">
-                                <option value="" selected>Pilih Penanggung Jawab</option>
-                            @foreach ($data as $data)
+                            <option value="{{ $data->user_id }}" selected>{{ $data->user->name }}</option>
+                            @foreach ($user as $data)
                                 <option value="{{ $data->id }}">{{ $data->name }}</option>
                             @endforeach
                         </select>

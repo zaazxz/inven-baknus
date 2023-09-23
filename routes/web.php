@@ -50,6 +50,10 @@ Route::group(['middleware' => ['auth', 'role:Administrator,Laboran,Penanggung Ja
     Route::prefix('lokasi')->group(function() {
         Route::get('/', [LokasiController::class, 'index'])->name('lokasi.index');
         Route::get('/create', [LokasiController::class, 'create'])->name('lokasi.create');
+        Route::get('/edit/{lokasi}', [LokasiController::class, 'edit'])->name('lokasi.edit');
+        Route::post('/store', [LokasiController::class, 'store'])->name('lokasi.store');
+        Route::post('/update/{lokasi}', [LokasiController::class, 'update'])->name('lokasi.update');
+        Route::get('/destroy/{lokasi}', [LokasiController::class, 'destroy'])->name('lokasi.destroy');
     });
 
     // Peminjaman

@@ -44,42 +44,33 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kode Barang</th>
-                            <th>Nama Barang</th>
-                            <th>Tanggal Penambahan</th>
+                            <th>Nama Lokasi</th>
+                            <th>Penanggung Jawab</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
+                        @foreach ($data as $data)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $data->nama_lokasi }}</td>
+                                <td>{{ $data->user->name ?? 'Belum Terdaftar' }}</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-12 mb-1 d-flex justify-content-center">
+                                            <a href="{{ route('lokasi.edit', $data->id) }}" class="btn btn-warning">
+                                                <i class="fa-solid fa-pen"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-2 col-md-12 mb-1 d-flex justify-content-center">
+                                            <a href="{{ route('lokasi.destroy', $data->id) }}" class="btn btn-danger">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
