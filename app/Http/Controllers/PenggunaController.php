@@ -86,11 +86,17 @@ class PenggunaController extends Controller
         } else if ($data['role'] == 'Laboran') {
             $data['password'] = bcrypt('laboran123');
         } else {
-            $data['password'] = bcrypt('pj123');
+            $data['password'] = NULL;
         }
 
         // Generate First Token
-        $data['remember_token'] = Str::random(10);
+        if ($data['role'] == 'Administrator') {
+            $data['remember_token'] = Str::random(10);
+        } else if ($data['role'] == 'Laboran') {
+            $data['remember_token'] = Str::random(10);
+        } else {
+            $data['password'] = NULL;
+        }
 
         User::create($data);
 
@@ -124,7 +130,7 @@ class PenggunaController extends Controller
             'name'      => '',
             'role'      => '',
             'email'     => '',
-            'picture'   => ''
+            'picture'   => 'image|file|mimes:jpeg,png,jpg,gif,svg|max:2000'
         ];
 
         // Validasi
@@ -136,6 +142,24 @@ class PenggunaController extends Controller
                 Storage::delete($user->picture);
             }
             $validatedData['picture'] = $request->file('picture')->store('image/users');
+        }
+
+        // Password Auto Fill
+        if ($validatedData['role'] == 'Administrator') {
+            $validatedData['password'] = bcrypt('admin123');
+        } else if ($validatedData['role'] == 'Laboran') {
+            $validatedData['password'] = bcrypt('laboran123');
+        } else {
+            $validatedData['password'] = NULL;
+        }
+
+        // Generate First Token
+        if ($validatedData['role'] == 'Administrator') {
+            $validatedData['remember_token'] = Str::random(10);
+        } else if ($validatedData['role'] == 'Laboran') {
+            $validatedData['remember_token'] = Str::random(10);
+        } else {
+            $validatedData['password'] = NULL;
         }
 
         User::where('id', $user->id)

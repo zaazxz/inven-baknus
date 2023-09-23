@@ -9,4 +9,15 @@ use Illuminate\Routing\Controller as BaseController;
 class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
+
+    // View Backend
+    public function backend() {
+        return view('backend.index');
+    }
+
+    // View Landing
+    public function landing() {
+        return view('index');
+    }
+
 }

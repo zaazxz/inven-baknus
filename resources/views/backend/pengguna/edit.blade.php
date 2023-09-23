@@ -46,7 +46,7 @@
         {{-- Form Data : Start --}}
         <div class="col-lg-6 col-md-12 my-2 mb-3">
             <div class="card p-3">
-                <form action="{{ route('pengguna.update', $data->id) }}" method="put" enctype="multipart/form-data">
+                <form action="{{ route('pengguna.update', $data->id) }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="name" class="ml-1">Masukkan Nama Anda : </label>
@@ -79,8 +79,6 @@
                         <option value="Penanggung Jawab" {{ ($data->role == 'Penanggung Jawab') ? 'selected' : '' }}>Penanggung Jawab</option>
                     </select>
                 </div>
-                @error('role') {{ $message }} @enderror
-                @error('password') {{ $message }} @enderror
             </div>
         </div>
         {{-- Form Data : End --}}
@@ -91,13 +89,16 @@
                 <div class="form-group">
                     <label for="picture" class="ml-1">Masukkan Gambar : </label>
                     <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="picture" name="picture" onchange="previewImage()">
+                        <input type="file" class="custom-file-input" id="picture" name="picture" onchange="previewImage()" value="{{ $data->picture }}">
                         <label class="custom-file-label" for="picture" id="placeholderImage">Gambar Sebelumnya</label>
                     </div>
+                    @error('picture')
+                        {{ $message }}
+                    @enderror
                     </div>
                     <div class="row">
                         <div class="col-12 border d-flex justify-content-center py-4">
-                        <img src="{{ asset('storage/' . $data->picture) }}" width="120px;" id="image">
+                        <img src="{{ ($data->picture ? asset('storage/' . $data->picture) : asset('image/assets/dummy.png')) }}" width="120px;" id="image">
                     </div>
                 </div>
             </div>

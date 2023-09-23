@@ -64,6 +64,9 @@
         </div>
     </div>
 
+    {{-- Sweetalert --}}
+    @include('sweetalert::alert')
+
     {{-- Bootstrap core JavaScript --}}
     <script src="{{ asset('jquery/jquery.min.js') }}"></script>
     <script src="{{ asset('sb-admin/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>

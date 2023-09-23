@@ -74,15 +74,14 @@
     {{-- Nav Item : End --}}
 
     {{-- Nav Item : Start --}}
+    @if (auth()->user()->role == 'Administrator')
     <li class="nav-item {{ str_contains($url, 'pengguna') ? 'active' : '' }}">
         <a class="nav-link" href="{{ route('pengguna.index') }}">
             <i class="fa-solid fa-user"></i>
             <span>Pengguna</span>
         </a>
     </li>
+    @endif
     {{-- Nav Item : End --}}
-
-    <!-- Divider -->
-    {{-- <hr class="sidebar-divider d-none d-md-block"> --}}
 
 </ul>
