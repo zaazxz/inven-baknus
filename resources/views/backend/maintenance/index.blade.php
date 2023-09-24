@@ -21,7 +21,7 @@
                 {{ $halaman }}
             @else
                 <a href="{{ route('home') }}">Dashboard</a> /
-                <a href="{{ route('lokasi.index') }}">Peminjaman</a> /
+                <a href="{{ route('maintenance.index') }}">Maintenance</a> /
                 {{ $halaman }}
             @endif
         </small>
@@ -31,7 +31,19 @@
     {{-- Pemisah Section : Start  --}}
     <div class="mb-3 mt-1">
         <div class="card py-2 pt-3 shadow border-primary border-bottom-primary">
-            <h4 class="text-center text-primary font-weight-bolder">{{ $title }}</h4>
+            <div class="row">
+                <div class="col-12">
+                    <h4 class="text-center text-primary font-weight-bolder">{{ $title }}</h4>
+                </div>
+                <div class="col-12">
+                    <div class="border border-gray-500"></div>
+                </div>
+                <div class="col-12">
+                    <a class="btn {{ str_contains($url, 'index') ? 'btn-primary text-white' : 'btn-light' }} mt-2 ml-2 mx-1 shadow" href="{{ route('maintenance.index') }}">Keseluruhan</a>
+                    <a class="btn {{ str_contains($url, 'perbaikan') ? 'btn-primary text-white' : 'btn-light' }} mt-2 mx-1 shadow" href="{{ route('maintenance.perbaikan') }}">Dalam Pengerjaan</a>
+                    <a class="btn {{ str_contains($url, 'selesai') ? 'btn-primary text-white' : 'btn-light' }} mt-2 mx-1 shadow" href="{{ route('maintenance.selesai') }}">Selesai</a>
+                </div>
+            </div>
         </div>
     </div>
     {{-- Pemisah Section : End  --}}
@@ -45,32 +57,32 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Barang</th>
-                            <th>Nama Peminjam</th>
+                            <th>Jenis Maintenance</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($pinjam as $pinjam)
+                        @foreach ($data as $data)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $pinjam->inven->nama_barang }}</td>
-                                <td>{{ $pinjam->peminjam }}</td>
+                                <td>{{ $data->inven->nama_barang }}</td>
+                                <td>{{ $data->jenis_maintenance }}</td>
                                 <td>
                                     <div class="row">
                                         <div class="col-lg-2 col-md-12 mb-1 d-flex justify-content-center">
-                                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalData{{ $pinjam->id }}">
+                                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalData{{ $data->id }}">
                                                 <i class="fa-solid fa-circle-info"></i>
                                             </a>
                                         </div>
-                                        @if ($pinjam->tgl_kembali)
+                                        @if ($data->tgl_penyelesaian)
                                         @else
                                         <div class="col-lg-2 col-md-12 mb-1 d-flex justify-content-center">
-                                            <a href="{{ route('peminjaman.destroy', $pinjam->id) }}" class="btn btn-danger">
+                                            <a href="{{ route('peminjaman.destroy', $data->id) }}" class="btn btn-danger">
                                                 <i class="fa-solid fa-trash-can"></i>
                                             </a>
                                         </div>
                                         <div class="col-lg-2 col-md-12 mb-1 d-flex justify-content-center">
-                                            <a href="#" class="btn btn-success" data-toggle="modal" data-target="#modalPengembalian{{ $pinjam->id }}">
+                                            <a href="#" class="btn btn-success" data-toggle="modal" data-target="#modalPenyelesaian{{ $data->id }}">
                                                 <i class="fa-solid fa-hand-holding-hand"></i>
                                             </a>
                                         </div>
@@ -79,12 +91,12 @@
                                 </td>
                             </tr>
 
-                            {{-- Modal Detail --}}
-                            <div class="modal fade" id="modalData{{ $pinjam->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            {{-- Modal Show Detail --}}
+                            <div class="modal fade" id="modalData{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Detail Peminjaman {{ $pinjam->peminjam }}</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Detail Perbaikan {{ $data->inven->nama_barang }}</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
@@ -93,26 +105,38 @@
                                         <ul class="list-group">
                                             <li class="list-group-item">
                                                 <div class="row">
-                                                    <div class="col-6">Nama Peminjam</div>
-                                                    <div class="col-6">: {{ $pinjam->peminjam }}</div>
+                                                    <div class="col-6">Nama Barang</div>
+                                                    <div class="col-6">: {{ $data->inven->nama_barang }}</div>
                                                 </div>
                                             </li>
                                             <li class="list-group-item">
                                                 <div class="row">
-                                                    <div class="col-6">Tanggal Peminjaman</div>
-                                                    <div class="col-6">: {{ $pinjam->tgl_pinjam }}</div>
+                                                    <div class="col-6">Jumlah Barang Diperbaiki</div>
+                                                    <div class="col-6">: {{ $data->jumlah }}</div>
                                                 </div>
                                             </li>
                                             <li class="list-group-item">
                                                 <div class="row">
-                                                    <div class="col-6">Tanggal Pengembalian</div>
-                                                    <div class="col-6">: {{ $pinjam->tgl_kembali ?? '-' }}</div>
+                                                    <div class="col-6">Tanggal Mulai Perbaikan</div>
+                                                    <div class="col-6">: {{ $data->tgl_maintenance }}</div>
                                                 </div>
                                             </li>
                                             <li class="list-group-item">
                                                 <div class="row">
-                                                    <div class="col-6">Penanggung Jawab</div>
-                                                    <div class="col-6">: {{ $pinjam->user->name }}</div>
+                                                    <div class="col-6">Tanggal Perbaikan Selesai</div>
+                                                    <div class="col-6">: {{ $data->tgl_penyelesaian ?? '-' }}</div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-6">Jenis Maintenance</div>
+                                                    <div class="col-6">: {{ $data->jenis_maintenance }}</div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-6">Status Perbaikan Saat Ini</div>
+                                                    <div class="col-6">: {{ $data->status }}</div>
                                                 </div>
                                             </li>
                                         </ul>
@@ -124,53 +148,53 @@
                                 </div>
                             </div>
 
-                            {{-- Modal Pengembalian --}}
-                            <div class="modal fade" id="modalPengembalian{{ $pinjam->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            {{-- Modal Penyelesaian --}}
+                            <div class="modal fade" id="modalPenyelesaian{{ $data->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Pengembalian</h5>
+                                    <h5 class="modal-title" id="exampleModalLabel">Penyelesaian Maintenance</h5>
                                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
                                     </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="{{ route('peminjaman.update', $pinjam->id) }}" method="post" enctype="multipart/form-data">
+                                        <form action="{{ route('maintenance.update', $data->id) }}" method="post" enctype="multipart/form-data">
                                             @csrf
                                             <div class="row">
 
                                                 {{-- Data pinjam 1 --}}
                                                 <div class="col-lg-6 col-md-12">
                                                     <div class="form-group">
-                                                        <label for="tgl_pinjam" class="ml-1">Masukkan Tanggal Peminjaman : </label>
+                                                        <label for="tgl_maintenance" class="ml-1">Masukkan Tanggal Mulai Perbaikan : </label>
                                                         <input
                                                         type="date"
                                                         class="form-control form-control-user"
-                                                        id="tgl_pinjam"
-                                                        name="tgl_pinjam"
-                                                        placeholder="Masukkan Tanggal Peminjaman"
-                                                        value="{{ $pinjam->tgl_pinjam }}"
+                                                        id="tgl_maintenance"
+                                                        name="tgl_maintenance"
+                                                        placeholder="Masukkan Tanggal Mulai Perbaikan"
+                                                        value="{{ $data->tgl_maintenance }}"
                                                         disabled>
                                                     </div>
                                                     <div class="form-group">
-                                                        <label for="peminjam" class="ml-1">Masukkan nama Peminjam : </label>
+                                                        <label for="inven_id" class="ml-1">Masukkan Nama Barang : </label>
                                                         <input
                                                         type="text"
                                                         class="form-control form-control-user"
-                                                        id="peminjam"
-                                                        name="peminjam"
-                                                        placeholder="{{ $pinjam->peminjam }}"
+                                                        id="inven_id"
+                                                        name="inven_id"
+                                                        placeholder="{{ $data->inven->nama_barang }}"
                                                         disabled>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-6 col-md-12">
                                                     <div class="form-group">
-                                                        <label for="tgl_kembali" class="ml-1">Masukkan Tanggal Pengembalian : </label>
+                                                        <label for="tgl_penyelesaian" class="ml-1">Masukkan Tanggal Selesai Maintenance : </label>
                                                         <input
                                                         type="date"
                                                         class="form-control form-control-user"
-                                                        id="tgl_kembali"
-                                                        name="tgl_kembali"
+                                                        id="tgl_penyelesaian"
+                                                        name="tgl_penyelesaian"
                                                         placeholder="Masukkan Tanggal Peminjaman"
                                                         required
                                                         >
@@ -182,7 +206,7 @@
                                                         class="form-control form-control-user"
                                                         id="jumlah"
                                                         name="jumlah"
-                                                        placeholder="{{ $pinjam->jumlah }}"
+                                                        placeholder="{{ $data->jumlah }}"
                                                         disabled>
                                                     </div>
                                                 </div>
@@ -196,6 +220,7 @@
                                 </div>
                                 </div>
                             </div>
+
                         @endforeach
                     </tbody>
                 </table>
@@ -207,7 +232,7 @@
     {{-- Button Create Data : Start --}}
     <div class="row mb-4">
         <div class="col-12">
-            <a href="{{ route('peminjaman.create') }}" class="btn btn-primary btn-block shadow font-weight-bold">Buat Peminjaman</a>
+            <a href="{{ route('maintenance.create') }}" class="btn btn-primary btn-block shadow font-weight-bold">Tambah Data Maintenance</a>
         </div>
     </div>
     {{-- Button Create Data : Start --}}

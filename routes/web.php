@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\PenggunaController;
 use App\Http\Controllers\InventarisController;
+use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\PeminjamanController;
 
 /*
@@ -48,8 +49,9 @@ Route::group(['middleware' => ['auth', 'role:Administrator,Laboran,Penanggung Ja
         Route::post('/store', [InventarisController::class, 'store'])->name('inven.store');
         Route::post('/update/{inventaris}', [InventarisController::class, 'update'])->name('inven.update');
 
-        // getting Code
+        // getting With Ajax
         Route::get('/getcode', [InventarisController::class, 'code'])->name('getvaluecode');
+        Route::get('/jumlah', [InventarisController::class, 'jumlah'])->name('getjumlahinven');
 
     });
 
@@ -70,6 +72,16 @@ Route::group(['middleware' => ['auth', 'role:Administrator,Laboran,Penanggung Ja
         Route::get('/destroy/{peminjaman}', [PeminjamanController::class, 'destroy'])->name('peminjaman.destroy');
         Route::post('/store', [PeminjamanController::class, 'store'])->name('peminjaman.store');
         Route::post('/update/{peminjaman}', [PeminjamanController::class, 'update'])->name('peminjaman.update');
+    });
+
+    // Maintenance
+    Route::prefix('maintenance')->group(function() {
+        Route::get('/', [MaintenanceController::class, 'index'])->name('maintenance.index');
+        Route::get('/perbaikan', [MaintenanceController::class, 'perbaikan'])->name('maintenance.perbaikan');
+        Route::get('/selesai', [MaintenanceController::class, 'selesai'])->name('maintenance.selesai');
+        Route::get('/create', [MaintenanceController::class, 'create'])->name('maintenance.create');
+        Route::post('/store', [MaintenanceController::class, 'store'])->name('maintenance.store');
+        Route::post('/update/{maintenance}', [MaintenanceController::class, 'update'])->name('maintenance.update');
     });
 
     // Auth

@@ -105,7 +105,9 @@
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                             Jumlah Barang (Keseluruhan)</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            {{ $inven }}
+                                        </div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fa-solid fa-desktop fa-2x"></i>
@@ -120,8 +122,10 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                            Jumlah Barang (Keseluruhan)</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                                            Jumlah Barang (Tidak Tersedia)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            {{ $inven_tidak }}
+                                        </div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fa-solid fa-desktop fa-2x"></i>
@@ -136,8 +140,10 @@
                                 <div class="row no-gutters align-items-center">
                                     <div class="col mr-2">
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                            Jumlah Barang (Keseluruhan)</div>
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                                            Jumlah Barang (Tersedia)</div>
+                                        <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                            {{ $inven_tersedia }}
+                                        </div>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fa-solid fa-desktop fa-2x"></i>
@@ -165,40 +171,18 @@
                                         <th>No</th>
                                         <th>Kode Barang</th>
                                         <th>Nama Barang</th>
-                                        <th>Tanggal Penambahan</th>
+                                        <th>Tanggal / Jam Penambahan</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @foreach ($inventaris_baru as $inven)
                                     <tr>
-                                        <td>1</td>
-                                        <td>001</td>
-                                        <td>Komputer Server</td>
-                                        <td>20 - 02 - 2023</td>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $inven->kode_barang }}</td>
+                                        <td>{{ $inven->nama_barang }}</td>
+                                        <td>{{ $inven->created_at }}</td>
                                     </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>001</td>
-                                        <td>Komputer Server</td>
-                                        <td>20 - 02 - 2023</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>001</td>
-                                        <td>Komputer Server</td>
-                                        <td>20 - 02 - 2023</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>001</td>
-                                        <td>Komputer Server</td>
-                                        <td>20 - 02 - 2023</td>
-                                    </tr>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>001</td>
-                                        <td>Komputer Server</td>
-                                        <td>20 - 02 - 2023</td>
-                                    </tr>
+                                    @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -215,7 +199,7 @@
                 <div class="row">
 
                     {{-- Barang Inventaris --}}
-                    <div class="col-lg-6 col-md-12 col-12">
+                    <div class="col-lg-12 col-md-12 col-12">
 
                         <div class="mb-3 mt-1">
                             <div class="card py-2 pt-3 shadow border-primary border-bottom-primary">
@@ -232,87 +216,18 @@
                                                 <th>No</th>
                                                 <th>Kode Barang</th>
                                                 <th>Nama Barang</th>
+                                                <th>Tanggal / Jam Penambahan</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- Barang Perbaikan --}}
-                    <div class="col-lg-6 col-md-12 col-12">
-
-                        <div class="mb-3 mt-1">
-                            <div class="card py-2 pt-3 shadow border-warning border-bottom-warning">
-                                <h4 class="text-center text-warning font-weight-bolder">BARANG INVENTARIS MAINTENANCE</h4>
-                            </div>
-                        </div>
-
-                        <div class="row mb-4">
-                            <div class="col-12">
-                                <div class="card p-3 border-0 shadow">
-                                    <table id="table_two" class="table table-striped table-bordered" style="width:100%">
-                                        <thead>
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Kode Barang</th>
-                                                <th>Nama Barang</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
+                                            @foreach ($inventaris_baru as $inven)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $inven->kode_barang }}</td>
+                                                    <td>{{ $inven->nama_barang }}</td>
+                                                    <td>{{ $inven->created_at }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -341,31 +256,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
+                                            @foreach ($inventaris_tersedia as $inven)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $inven->kode_barang }}</td>
+                                                    <td>{{ $inven->nama_barang }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -394,31 +291,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>001</td>
-                                                <td>Komputer Server</td>
-                                            </tr>
+                                            @foreach ($inventaris_tidak as $inven)
+                                                <tr>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $inven->kode_barang }}</td>
+                                                    <td>{{ $inven->nama_barang }}</td>
+                                                </tr>
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
@@ -444,14 +323,27 @@
                 <div class="row mb-4">
                     <div class="col-12">
                         <div class="card p-5">
-                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem, quae optio deleniti distinctio odio, asperiores quasi eos iure excepturi ea dicta illo! Ipsa alias enim placeat. Dicta earum vero aliquam debitis quia amet laudantium nostrum laboriosam, eligendi, eaque libero natus consequuntur non rem similique dolore est quod officia dolorum blanditiis. Delectus deserunt vero dolorem similique maiores, doloribus molestiae totam tenetur ullam repudiandae nemo eveniet dolore esse, voluptatum eius. Labore necessitatibus dolore asperiores quasi sunt natus voluptas rerum obcaecati non, aperiam tenetur doloremque autem soluta corrupti quae fuga numquam exercitationem facilis magnam, accusamus magni perferendis rem fugiat. Voluptates consectetur iusto nihil.</p>
+                            <p>
+                                <span class="text-primary font-weight-bold">Inventaris Barang SMP Bakti Nusantara 666</span>
+                                adalah sebuah aplikasi berbasis website untuk kebutuhan menghitung, dan memonitoring data
+                                barang - barang Inventaris di SMP Bakti Nusantara 666, juga memantau kegiatan yang menggunakan barang - barang
+                                inventaris SMP Bakti Nusantara 666 seperti peminjaman, perbaikan (Maintenance). Monitoring dilakukan dengan
+                                otomatisasi dan mudah untuk difahami. Dibuat dengan menggunakan teknologi Framework Laravel versi 10, Bootstrap
+                                versi 4, dan bantuan Library JavaScript seperti JQuery, DataTables, dan lainnya.
+                            </p>
 
                             {{-- Card Component : Start --}}
                             <div class="row">
 
-                                <div class="col-4 border" style="width: 200px; height: 200px; border: 1px solid black;"></div>
-                                <div class="col-4 border" style="width: 200px; height: 200px; border: 1px solid black;"></div>
-                                <div class="col-4 border" style="width: 200px; height: 200px; border: 1px solid black;"></div>
+                                <div class="col-lg-4 col-md-12 my-2 d-flex justify-content-center">
+                                    <img src="{{ asset('image/assets/laravel.png') }}" alt="" class="img-fluid" width="70%;">
+                                </div>
+                                <div class="col-lg-4 col-md-12 my-2 d-flex justify-content-center">
+                                    <img src="{{ asset('image/assets/bootstrap.png') }}" alt="" class="img-fluid" width="70%;">
+                                </div>
+                                <div class="col-lg-4 col-md-12 my-2 d-flex justify-content-center">
+                                    <img src="{{ asset('image/assets/jquery.png') }}" alt="" class="img-fluid" width="70%;">
+                                </div>
 
                             </div>
                             {{-- Card Component : End --}}
@@ -467,16 +359,85 @@
                 </div>
 
                 <div class="row mb-4">
-                    <div class="col-6">
+
+                    {{-- Profil Mirza Qamaruzzaman --}}
+                    <div class="col-12 my-2">
                         <div class="card p-4">
-                            <div style="width: 200px; height: 200px; border: 1px solid black;"></div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-12 py-3 d-flex justify-content-center">
+                                    <img src="{{ asset('sb-admin/img/undraw_profile.svg') }}" alt="" srcset="" class="img-fluid" style="width: 200px;">
+                                </div>
+                                <div class="col-lg-8 col-md-12">
+                                    <ul class="list-group mt-4">
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-12">Nama</div>
+                                                <div class="col-lg-8 col-md-12">: Mirza Qamaruzzaman</div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-12">E-mail</div>
+                                                <div class="col-lg-8 col-md-12">: <a href="mailto:mirzaqamaruzzaman18@gmail.com">mirzaqamaruzzaman18@gmail.com</a></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-12">Github</div>
+                                                <div class="col-lg-8 col-md-12">: <a href="https://github.com/zaazxz">Zaazxz</a></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-12">Linkedin</div>
+                                                <div class="col-lg-8 col-md-12">: <a href="https://linkedin.com/in/mirzaqamaruzzaman18">Mirza Qamaruzzaman</a></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="col-6">
+
+                    {{-- Profil Rio Andrianto --}}
+                    <div class="col-12 my-2">
                         <div class="card p-4">
-                            <div style="width: 200px; height: 200px; border: 1px solid black;"></div>
+                            <div class="row">
+                                <div class="col-lg-4 col-md-12 py-3 d-flex justify-content-center">
+                                    <img src="{{ asset('sb-admin/img/undraw_profile.svg') }}" alt="" srcset="" class="img-fluid" style="width: 200px;">
+                                </div>
+                                <div class="col-lg-8 col-md-12">
+                                    <ul class="list-group mt-4">
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-12">Nama</div>
+                                                <div class="col-lg-8 col-md-12">: Rio andrianto, S.kom., Gr</div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-12">E-mail</div>
+                                                <div class="col-lg-8 col-md-12">: <a href="mailto:r.andrianto@gmail.com">r.andrianto@gmail.com</a></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-12">Github</div>
+                                                <div class="col-lg-8 col-md-12">: <a href="https://github.com/neushepa">neushepa</a></div>
+                                            </div>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-12">Linkedin</div>
+                                                <div class="col-lg-8 col-md-12">: <a href="https://linkedin.com/in/rioandrianto">Rio Andrianto</a></div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
                 </div>
 
             </div>

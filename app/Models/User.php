@@ -27,7 +27,7 @@ class User extends Authenticatable
     ];
 
     public function lokasi() {
-        return $this->belongsTo(Lokasi::class);
+        return $this->hasMany(Lokasi::class);
     }
 
     public function peminjaman() {

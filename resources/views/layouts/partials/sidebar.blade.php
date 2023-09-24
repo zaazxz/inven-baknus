@@ -45,6 +45,15 @@
     </li>
     {{-- Nav Item : End --}}
 
+    {{-- Nav Item : Start --}}
+    <li class="nav-item {{ str_contains($url, 'maintenance') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('maintenance.index') }}">
+            <i class="fa-solid fa-gear"></i>
+            <span>Maintenance</span>
+        </a>
+    </li>
+    {{-- Nav Item : End --}}
+
     {{-- Divider : Start --}}
     <hr class="sidebar-divider">
     {{-- Divider : End --}}

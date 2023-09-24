@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>My App</title>
+    <title>INSAR SMP BAKNUS 666</title>
 
     {{-- Datatables --}}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css">
@@ -28,6 +28,9 @@
     {{-- Your CSS --}}
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     @yield('style')
+
+    {{-- Icon --}}
+    <link rel="shortcut icon" href="{{ asset('image/assets/non-bg-fix.png') }}" type="image/x-icon">
 
 </head>
 

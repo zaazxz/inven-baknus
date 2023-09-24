@@ -62,7 +62,7 @@
                 {{ $halaman }}
             @else
                 <a href="{{ route('home') }}">Dashboard</a> /
-                <a href="{{ route('peminjaman.index') }}">Peminjaman</a> /
+                <a href="{{ route('maintenance.index') }}">Maintenance</a> /
                 {{ $halaman }}
             @endif
         </small>
@@ -85,9 +85,9 @@
     <div class="row mb-4">
 
         {{-- Form Data 1 : Start --}}
-        <div class="col-lg-4 col-md-12 my-2 mb-3">
+        <div class="col-12 my-2 mb-3">
             <div class="card p-3">
-            <form action="{{ route('peminjaman.store') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('maintenance.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
                     <label for="inven_id">Pilih Barang Inventaris :</label>
@@ -98,45 +98,57 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="jumlah" class="ml-1">Masukkan Jumlah Peminjaman : </label>
+                    <label for="jumlah" class="ml-1">Masukkan Jumlah Perbaikan : </label>
                     <input
                     type="number"
                     class="form-control form-control-user"
                     id="jumlah"
                     name="jumlah"
-                    placeholder="Masukkan Jumlah Peminjaman"
+                    placeholder="Masukkan Jumlah Perbaikan"
+                    required>
+                </div>
+                <div class="form-group">
+                    <label for="jenis_maintenance" class="ml-1">Masukkan Jenis Perbaikan : </label>
+                    <select class="form-control form-control-user" id="jenis_maintenance" name="jenis_maintenance">
+                        <option value="Perbaikan">Perbaikan</option>
+                        <option value="Install Ulang">Install Ulang</option>
+                        <option value="Ganti Spare Part">Ganti Spare Part</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="tgl_maintenance" class="ml-1">Masukkan Tanggal Perbaikan : </label>
+                    <input
+                    type="date"
+                    class="form-control form-control-user"
+                    id="tgl_maintenance"
+                    name="tgl_maintenance"
+                    placeholder="Masukkan Tanggal Perbaikan"
                     required>
                 </div>
             </div>
         </div>
         {{-- Form Data 1 : End --}}
 
-        {{-- Form Data 1 : Start --}}
-        <div class="col-lg-8 col-md-12 my-2 mb-3">
-            <div class="card p-3">
-                <div class="form-group">
-                    <label for="peminjam" class="ml-1">Masukkan nama Peminjam : </label>
-                    <input
-                    type="text"
-                    class="form-control form-control-user"
-                    id="peminjam"
-                    name="peminjam"
-                    placeholder="Masukkan Nama Peminjam"
-                    required>
-                </div>
-                <div class="form-group">
-                    <label for="tgl_pinjam" class="ml-1">Masukkan Tanggal Peminjaman : </label>
-                    <input
-                    type="date"
-                    class="form-control form-control-user"
-                    id="tgl_pinjam"
-                    name="tgl_pinjam"
-                    placeholder="Masukkan Tanggal Peminjaman"
-                    required>
+        {{-- Pemisah Section : Start  --}}
+        <div class="col-12 my-2">
+            <div class="card py-2 pt-3 shadow border-primary border-bottom-primary">
+                <div class="row">
+                    <div class="col-12">
+                        <h4 class="text-center text-primary font-weight-bolder">Komponen</h4>
+                    </div>
                 </div>
             </div>
         </div>
-        {{-- Form Data 1 : End --}}
+        {{-- Pemisah Section : End  --}}
+
+        {{-- Trix Editor : Start --}}
+        <div class="col-12 my-2">
+            <div class="card p-3">
+                <input id="keterangan" type="hidden" name="keterangan">
+                <trix-editor input="keterangan" style="height: 200px;"></trix-editor>
+            </div>
+        </div>
+        {{-- Trix Editor : End --}}
 
         {{-- Pemisah Section : Start  --}}
         <div class="col-12 my-2">
@@ -173,83 +185,83 @@
 
 {{-- Section JavaScript --}}
 @section('script')
-    <script>
-        $(document).ready(function () {
+<script>
+    $(document).ready(function () {
 
-            $('#inven_id').click(function (e) {
-                e.preventDefault();
+        $('#inven_id').click(function (e) {
+            e.preventDefault();
 
-                let inven_id = $('#inven_id').val();
+            let inven_id = $('#inven_id').val();
 
-                console.log(inven_id);
+            console.log(inven_id);
 
-                $.ajax({
-                url: '{{ route('getjumlahinven') }}',
-                method: 'GET',
-                data: {
-                    inven_id:inven_id
-                },
-                cache: false,
-                success: function(data) {
+            $.ajax({
+            url: '{{ route('getjumlahinven') }}',
+            method: 'GET',
+            data: {
+                inven_id:inven_id
+            },
+            cache: false,
+            success: function(data) {
 
-                    // Kode Changed
-                    $('#jumlah').on('input', function() {
-                        if (data.jumlah < $('#jumlah').val()) {
-                            $('#jumlah').addClass('is-invalid');
-                            $('#jumlah').attr('name', '');
-                        } else {
-                            $('#jumlah').removeClass('is-invalid');
-                            $('#jumlah').attr('name', 'jumlah');
-                        }
+                // Kode Changed
+                $('#jumlah').on('input', function() {
+                    if (data.jumlah < $('#jumlah').val()) {
+                        $('#jumlah').addClass('is-invalid');
+                        $('#jumlah').attr('name', '');
+                    } else {
+                        $('#jumlah').removeClass('is-invalid');
+                        $('#jumlah').attr('name', 'jumlah');
+                    }
 
-                        console.log($('#jumlah').val());
-                    });
-
-                },
-                error: function(e) {
-                    response.text(e);
-                }
+                    console.log($('#jumlah').val());
                 });
 
-            });
-
-            $('#inven_id').change(function (e) {
-                e.preventDefault();
-
-                let inven_id = $('#inven_id').val();
-
-                console.log(inven_id);
-
-                $.ajax({
-                url: '{{ route('getjumlahinven') }}',
-                method: 'GET',
-                data: {
-                    inven_id:inven_id
-                },
-                cache: false,
-                success: function(data) {
-
-                    // Kode Changed
-                    $('#jumlah').on('input', function() {
-                        if (data.jumlah < $('#jumlah').val()) {
-                            $('#jumlah').addClass('is-invalid');
-                            $('#jumlah').attr('name', '');
-                        } else {
-                            $('#jumlah').removeClass('is-invalid');
-                            $('#jumlah').attr('name', 'jumlah');
-                        }
-
-                        console.log($('#jumlah').val());
-                    });
-
-                },
-                error: function(e) {
-                    response.text(e);
-                }
-                });
-
+            },
+            error: function(e) {
+                response.text(e);
+            }
             });
 
         });
-    </script>
+
+        $('#inven_id').change(function (e) {
+            e.preventDefault();
+
+            let inven_id = $('#inven_id').val();
+
+            console.log(inven_id);
+
+            $.ajax({
+            url: '{{ route('getjumlahinven') }}',
+            method: 'GET',
+            data: {
+                inven_id:inven_id
+            },
+            cache: false,
+            success: function(data) {
+
+                // Kode Changed
+                $('#jumlah').on('input', function() {
+                    if (data.jumlah < $('#jumlah').val()) {
+                        $('#jumlah').addClass('is-invalid');
+                        $('#jumlah').attr('name', '');
+                    } else {
+                        $('#jumlah').removeClass('is-invalid');
+                        $('#jumlah').attr('name', 'jumlah');
+                    }
+
+                    console.log($('#jumlah').val());
+                });
+
+            },
+            error: function(e) {
+                response.text(e);
+            }
+            });
+
+        });
+
+    });
+</script>
 @endsection

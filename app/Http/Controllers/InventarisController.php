@@ -101,6 +101,13 @@ class InventarisController extends Controller
         return response()->json($data);
     }
 
+    // getting Jumlah
+    public function jumlah(Request $request) {
+        $inven_id = $request->inven_id;
+        $data = Inventaris::where('id', $inven_id)->first();
+        return response()->json($data);
+    }
+
     // View Edit
     public function edit(Inventaris $inventaris)
     {

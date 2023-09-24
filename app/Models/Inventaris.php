@@ -21,4 +21,8 @@ class Inventaris extends Model
         return $this->hasMany(Peminjaman::class);
     }
 
+    public function maintenance() {
+        return $this->hasMany(Maintenance::class);
+    }
+
 }
