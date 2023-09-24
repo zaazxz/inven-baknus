@@ -23,7 +23,9 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                 Jumlah Barang (Keseluruhan)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ $inven }}
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fa-solid fa-desktop fa-2x"></i>
@@ -38,8 +40,10 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                Jumlah Barang (Keseluruhan)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                                Jumlah Barang (Tidak Tersedia)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ $inven_tidak }}
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fa-solid fa-desktop fa-2x"></i>
@@ -54,8 +58,10 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Jumlah Barang (Keseluruhan)</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                                Jumlah Barang (Tersedia)</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                {{ $inven_tersedia }}
+                            </div>
                         </div>
                         <div class="col-auto">
                             <i class="fa-solid fa-desktop fa-2x"></i>
@@ -89,36 +95,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
+                        @foreach ($inventaris_baru as $inven)
+                            <tr>
+                                <th>{{ $loop->iteration }}</th>
+                                <th>{{ $inven->kode_barang }}</th>
+                                <th>{{ $inven->nama_barang }}</th>
+                                <th>{{ $inven->created_at }}</th>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -142,42 +126,20 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kode Barang</th>
                             <th>Nama Barang</th>
-                            <th>Tanggal Penambahan</th>
+                            <th>Tanggal Peminjaman</th>
+                            <th>Nama Peminjam</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
+                        @foreach ($inventaris_peminjaman as $pinjam)
+                            <tr>
+                                <th>{{ $loop->iteration }}</th>
+                                <th>{{ $pinjam->inven->nama_barang }}</th>
+                                <th>{{ $pinjam->tgl_pinjam }}</th>
+                                <th>{{ $pinjam->user->name }}</th>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
