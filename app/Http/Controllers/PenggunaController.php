@@ -202,4 +202,61 @@ class PenggunaController extends Controller
             return back();
         }
     }
+
+    public function configedit(User $user) {
+
+        return view('backend.pengguna.konfig', [
+            'title'         => 'Edit Data Pengguna',
+            'title_header'  => 'Edit Data Pengguna',
+            'halaman'       => 'Edit Data',
+            'data'          => $user,
+            'lokasi'        => Lokasi::where('user_id', $user->id)->get(),
+            'lokasi_null'   => Lokasi::where('user_id', NULL)->get()
+        ]);
+
+    }
+
+    public function configupdate(Request $request, User $user) {
+
+        // Rules Awal
+        $rules = [
+            'name'      => '',
+            'role'      => '',
+            'email'     => '',
+            'lokasi_id' => '',
+            'picture'   => 'image|file|mimes:jpeg,png,jpg,gif,svg|max:2000'
+        ];
+
+        // Validasi
+        $validatedData = $request->validate($rules);
+
+        // Image
+        if ($request->file('picture')) {
+            if($user->picture) {
+                Storage::delete($user->picture);
+            }
+            $validatedData['picture'] = $request->file('picture')->store('image/users');
+        }
+
+        // Generate First Token
+        if ($validatedData['role'] == 'Administrator') {
+            $validatedData['remember_token'] = Str::random(10);
+        } else if ($validatedData['role'] == 'Laboran') {
+            $validatedData['remember_token'] = Str::random(10);
+        } else {
+            $validatedData['password'] = NULL;
+        }
+
+        User::where('id', $user->id)
+            ->update($validatedData);
+
+        if ($validatedData) {
+            Alert::success('Success', 'Profil berhasil diubah!');
+            return redirect()->route('home');
+        } else {
+            Alert::error('Error', 'Profil gagal diubah!');
+            return redirect()->route('home');
+        }
+
+    }
 }

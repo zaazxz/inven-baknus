@@ -33,7 +33,7 @@ Route::group(['middleware' => ['guest']], function () {
 });
 
 // Route for role : Admin & Laboran
-Route::group(['middleware' => ['auth', 'role:Administrator,Laboran,Penanggung Jawab']], function() {
+Route::group(['middleware' => ['auth', 'role:Administrator,Laboran']], function() {
 
     // Dashboard
     Route::get('/home', [Controller::class, 'backend'])->name('home');
@@ -83,6 +83,10 @@ Route::group(['middleware' => ['auth', 'role:Administrator,Laboran,Penanggung Ja
         Route::post('/store', [MaintenanceController::class, 'store'])->name('maintenance.store');
         Route::post('/update/{maintenance}', [MaintenanceController::class, 'update'])->name('maintenance.update');
     });
+
+    // User Profile Edit
+    Route::get('/config/edit/{user}', [PenggunaController::class, 'configedit'])->name('config.pengguna.edit');
+    Route::post('/config/update/{user}', [PenggunaController::class, 'configupdate'])->name('config.pengguna.update');
 
     // Auth
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout.auth');

@@ -43,6 +43,11 @@
                     Profil
                 </button>
                 <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ route('config.pengguna.edit', auth()->user()->id) }}">
+                    <i class="fa-solid fa-gear fa-sm fa-fw mr-2 text-gray-400"></i>
+                    Konfigurasi Profil
+                </a>
+                <div class="dropdown-divider"></div>
                 <form action="{{ route('logout.auth') }}" method="post">
                     @csrf
                     <button class="dropdown-item" type="submit">
