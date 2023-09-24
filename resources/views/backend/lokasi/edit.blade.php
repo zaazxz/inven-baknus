@@ -61,10 +61,16 @@
                     <div class="form-group">
                         <label for="penanggung_jawab">Pilih Penanggung Jawab</label>
                         <select class="form-control form-control-user" id="penanggung_jawab" name="user_id">
-                            <option value="{{ $data->user_id }}" selected>{{ $data->user->name }}</option>
-                            @foreach ($user as $data)
-                                <option value="{{ $data->id }}">{{ $data->name }}</option>
-                            @endforeach
+                            @if (!$data->user_id)
+                                @foreach ($user_terdaftar as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            @else
+                                <option value="{{ $data->user_id }}" selected>{{ $data->user->name ?? '' }}</option>
+                                @foreach ($user_terdaftar as $user)
+                                    <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                 </div>

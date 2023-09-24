@@ -98,7 +98,7 @@ Route::group(['middleware' => ['auth', 'role:Administrator']], function() {
         Route::get('/laboran', [PenggunaController::class, 'laboran'])->name('pengguna.laboran');
         Route::get('/pj', [PenggunaController::class, 'pj'])->name('pengguna.pj');
         Route::get('/create', [PenggunaController::class, 'create'])->name('pengguna.create');
-        Route::get('/edit/{id}', [PenggunaController::class, 'edit'])->name('pengguna.edit');
+        Route::get('/edit/{user}', [PenggunaController::class, 'edit'])->name('pengguna.edit');
         Route::post('/update/{user}', [PenggunaController::class, 'update'])->name('pengguna.update');
         Route::post('/store', [PenggunaController::class, 'store'])->name('pengguna.store');
         Route::get('/destroy/{id}', [PenggunaController::class, 'destroy'])->name('pengguna.destroy');

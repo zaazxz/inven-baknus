@@ -28,7 +28,7 @@ class LokasiController extends Controller
             'title'         => 'Lokasi',
             'title_header'  => 'Tambah Data Lokasi',
             'halaman'       => 'Tambah Lokasi',
-            'data'          => User::all()
+            'data'          => User::where('lokasi_id', NULL)->get()
         ]);
     }
 
@@ -56,11 +56,12 @@ class LokasiController extends Controller
     public function edit(Lokasi $lokasi)
     {
         return view('backend.lokasi.edit', [
-            'title'         => 'Lokasi',
-            'title_header'  => 'Update Data Lokasi',
-            'halaman'       => 'Update Lokasi',
-            'user'          => User::where('id', '!=', $lokasi->user_id)->get(),
-            'data'          => $lokasi
+            'title'             => 'Lokasi',
+            'title_header'      => 'Update Data Lokasi',
+            'halaman'           => 'Update Lokasi',
+            'user'              => User::where('id', '!=', $lokasi->user_id)->get(),
+            'user_terdaftar'    => User::where('lokasi_id', NULL)->get(),
+            'data'              => $lokasi
         ]);
     }
 

@@ -84,8 +84,7 @@
                     <select class="form-control form-control-user" id="lokasi" name="lokasi_id">
                         @if ($data->lokasi_id)
                             <option value="{{ $data->lokasi_id }}">{{ $data->lokasi->nama_lokasi ?? '' }}</option>
-                            <option value=""></option>
-                            @foreach ($lokasi as $lokasi)
+                            @foreach ($lokasi_null as $lokasi)
                                 <option value="{{ $lokasi->id }}">{{ $lokasi->nama_lokasi }}</option>
                             @endforeach
                         @elseif(!$data->lokasi_id)

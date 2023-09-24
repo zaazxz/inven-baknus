@@ -63,7 +63,7 @@ class PenggunaController extends Controller
             'title'         => 'Data Pengguna Baru',
             'title_header'  => 'Tambah Data Pengguna',
             'halaman'       => 'Tambah Data',
-            'lokasi'        => Lokasi::all()
+            'lokasi'        => Lokasi::where('user_id', NULL)->get()
         ]);
     }
 
@@ -114,18 +114,15 @@ class PenggunaController extends Controller
     }
 
     // View Edit
-    public function edit(string $id)
+    public function edit(User $user)
     {
-
-        $lokasi = User::select('lokasi_id')->where('id', $id)->get();
-
         return view('backend.pengguna.edit', [
             'title'         => 'Edit Data Pengguna',
             'title_header'  => 'Edit Data Pengguna',
             'halaman'       => 'Edit Data',
-            'data'          => User::where('id', $id)->first(),
-            'lokasi'        => Lokasi::where('id', '!===', $lokasi)->get(),
-            'lokasi_null'   => Lokasi::all()
+            'data'          => $user,
+            'lokasi'        => Lokasi::where('user_id', $user->id)->get(),
+            'lokasi_null'   => Lokasi::where('user_id', NULL)->get()
         ]);
     }
 
