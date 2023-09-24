@@ -20,9 +20,8 @@ return new class extends Migration
             $table->string('no_seri')->nullable();
             $table->string('tahun');
             $table->integer('jumlah');
-            $table->integer('stok');
             $table->enum('kondisi', ['Baru', 'Bekas']);
-            $table->enum('status', ['Tersedia', 'Tidak Tersedia', 'Maintenance']);
+            $table->enum('status', ['Tersedia', 'Tidak Tersedia']);
             $table->text('keterangan')->nullable();
             $table->foreignId('lokasi_id');
             $table->timestamps();

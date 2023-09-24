@@ -44,42 +44,156 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Kode Barang</th>
                             <th>Nama Barang</th>
-                            <th>Tanggal Penambahan</th>
+                            <th>Nama Peminjam</th>
+                            <th>Aksi</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>001</td>
-                            <td>Komputer Server</td>
-                            <td>20 - 02 - 2023</td>
-                        </tr>
+                        @foreach ($pinjam as $pinjam)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $pinjam->inven->nama_barang }}</td>
+                                <td>{{ $pinjam->peminjam }}</td>
+                                <td>
+                                    <div class="row">
+                                        <div class="col-lg-2 col-md-12 mb-1 d-flex justify-content-center">
+                                            <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#modalData{{ $pinjam->id }}">
+                                                <i class="fa-solid fa-circle-info"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-2 col-md-12 mb-1 d-flex justify-content-center">
+                                            <a href="{{ route('peminjaman.destroy', $pinjam->id) }}" class="btn btn-danger">
+                                                <i class="fa-solid fa-trash-can"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-lg-2 col-md-12 mb-1 d-flex justify-content-center">
+                                            <a href="#" class="btn btn-success" data-toggle="modal" data-target="#modalPengembalian{{ $pinjam->id }}">
+                                                <i class="fa-solid fa-hand-holding-hand"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            {{-- Modal Detail --}}
+                            <div class="modal fade" id="modalData{{ $pinjam->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Detail Peminjaman {{ $pinjam->peminjam }}</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul class="list-group">
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-6">Nama Peminjam</div>
+                                                    <div class="col-6">: {{ $pinjam->peminjam }}</div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-6">Tanggal Peminjaman</div>
+                                                    <div class="col-6">: {{ $pinjam->tgl_pinjam }}</div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-6">Tanggal Pengembalian</div>
+                                                    <div class="col-6">: {{ $pinjam->tgl_kembali ?? '-' }}</div>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-6">Penanggung Jawab</div>
+                                                    <div class="col-6">: {{ $pinjam->user->name }}</div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            {{-- Modal Pengembalian --}}
+                            <div class="modal fade" id="modalPengembalian{{ $pinjam->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Pengembalian</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="{{ route('peminjaman.update', $pinjam->id) }}" method="post" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="row">
+
+                                                {{-- Data pinjam 1 --}}
+                                                <div class="col-lg-6 col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="tgl_pinjam" class="ml-1">Masukkan Tanggal Peminjaman : </label>
+                                                        <input
+                                                        type="date"
+                                                        class="form-control form-control-user"
+                                                        id="tgl_pinjam"
+                                                        name="tgl_pinjam"
+                                                        placeholder="Masukkan Tanggal Peminjaman"
+                                                        value="{{ $pinjam->tgl_pinjam }}"
+                                                        disabled>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="peminjam" class="ml-1">Masukkan nama Peminjam : </label>
+                                                        <input
+                                                        type="text"
+                                                        class="form-control form-control-user"
+                                                        id="peminjam"
+                                                        name="peminjam"
+                                                        placeholder="{{ $pinjam->peminjam }}"
+                                                        disabled>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="tgl_kembali" class="ml-1">Masukkan Tanggal Pengembalian : </label>
+                                                        <input
+                                                        type="date"
+                                                        class="form-control form-control-user"
+                                                        id="tgl_kembali"
+                                                        name="tgl_kembali"
+                                                        placeholder="Masukkan Tanggal Peminjaman"
+                                                        required
+                                                        >
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="jumlah" class="ml-1">Masukkan Jumlah Peminjaman : </label>
+                                                        <input
+                                                        type="text"
+                                                        class="form-control form-control-user"
+                                                        id="jumlah"
+                                                        name="jumlah"
+                                                        placeholder="{{ $pinjam->jumlah }}"
+                                                        disabled>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="submit" class="btn btn-primary">Simpan</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </form>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

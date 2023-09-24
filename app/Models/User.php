@@ -30,4 +30,8 @@ class User extends Authenticatable
         return $this->belongsTo(Lokasi::class);
     }
 
+    public function peminjaman() {
+        return $this->hasMany(Peminjaman::class);
+    }
+
 }

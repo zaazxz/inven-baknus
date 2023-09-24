@@ -2,7 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Inventaris;
+use App\Models\Peminjaman;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+use RealRashid\SweetAlert\Facades\Alert;
 
 class PeminjamanController extends Controller
 {
@@ -13,58 +18,88 @@ class PeminjamanController extends Controller
             'title'         => 'List Data Peminjaman',
             'title_header'  => 'Peminjaman',
             'halaman'       => 'Peminjaman',
+            'pinjam'        => Peminjaman::all()
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // View Create
     public function create()
     {
         return view('backend.peminjaman.create', [
             'title'         => 'Buat Data Peminjaman',
             'title_header'  => 'Tambah Peminjaman',
             'halaman'       => 'Tambah Data',
+            'inven'         => Inventaris::where('status', 'Tersedia')->get(),
         ]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Store Function
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'inven_id'      => 'required',
+            'peminjam'      => 'required',
+            'jumlah'        => 'required',
+            'tgl_pinjam'    => 'required',
+            'keterangan'    => ''
+        ]);
+
+        // Use User ID
+        $data['user_id'] = Auth::user()->id;
+
+        // Tgl Kembali To NULL
+        $data['tgl_kembali'] = NULL;
+
+        Peminjaman::create($data);
+
+        if ($data) {
+            Alert::success('Success', 'Peminjaman Berhasil!');
+            return redirect()->route('peminjaman.index');
+        } else {
+            Alert::error('Error', 'Peminjaman Gagal!');
+            return redirect()->route('peminjaman.index');
+        }
+
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Update Function
+    public function update(Request $request, Peminjaman $peminjaman)
     {
-        //
+        $data = $request->validate([
+            'inven_id'      => '',
+            'peminjam'      => '',
+            'jumlah'        => '',
+            'tgl_pinjam'    => '',
+            'tgl_kembali'   => 'required',
+            'keterangan'    => ''
+        ]);
+
+        // Use User ID
+        $data['user_id'] = Auth::user()->id;
+
+        Peminjaman::where('id', $peminjaman->id)
+            ->update($data);
+
+        if ($data) {
+            Alert::success('Success', 'Pengembalian Berhasil! ');
+            return redirect()->route('peminjaman.index');
+        } else {
+            Alert::error('Error', 'Pengembalian Gagal! ');
+            return redirect()->route('peminjaman.index');
+        }
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    // Destroy Function
+    public function destroy(Peminjaman $peminjaman)
     {
-        //
-    }
+        Peminjaman::destroy('id', $peminjaman->id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        if ($peminjaman) {
+            Alert::success('Success', 'Peminjaman Berhasil dibatalkan!');
+            return redirect()->route('peminjaman.index');
+        } else {
+            Alert::error('Error', 'Peminjaman Gagal dibatalkan!');
+            return redirect()->route('peminjaman.index');
+        }
     }
 }

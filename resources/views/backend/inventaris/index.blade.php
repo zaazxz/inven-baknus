@@ -42,7 +42,6 @@
                     <a class="btn {{ str_contains($url, 'index') ? 'btn-primary text-white' : 'btn-light' }} mt-2 ml-2 mx-1 shadow" href="{{ route('inven.index') }}">Keseluruhan</a>
                     <a class="btn {{ str_contains($url, 'tersedia') ? 'btn-primary text-white' : 'btn-light' }} mt-2 mx-1 shadow" href="{{ route('inven.tersedia') }}">Tersedia</a>
                     <a class="btn {{ str_contains($url, 'tidak') ? 'btn-primary text-white' : 'btn-light' }} mt-2 mx-1 shadow" href="{{ route('inven.tidak') }}">Tidak Tersedia</a>
-                    <a class="btn {{ str_contains($url, 'maintenance') ? 'btn-primary text-white' : 'btn-light' }} mt-2 mx-1 shadow" href="{{ route('inven.maintenance') }}">Maintenance</a>
                 </div>
             </div>
         </div>
@@ -107,18 +106,13 @@
                                         <div class="row">
 
                                             {{-- Status Indikator --}}
-                                            @if (str_contains($url,'index'))
-                                            @else
-                                                <div class="col-12 my-2">
-                                                    @if (str_contains($url, 'tersedia'))
-                                                        <button class="btn btn-block btn-success">{{ $inven->status }}</button>
-                                                    @elseif (str_contains($url, 'tidak'))
-                                                        <button class="btn btn-block btn-danger">{{ $inven->status }}</button>
-                                                    @elseif (str_contains($url, 'maintenance'))
-                                                        <button class="btn btn-block btn-warning">{{ $inven->status }}</button>
-                                                    @endif
-                                                </div>
-                                            @endif
+                                            <div class="col-12 my-2">
+                                                @if ($inven->status == "Tersedia")
+                                                    <button class="btn btn-block btn-success">{{ $inven->status }}</button>
+                                                @else
+                                                    <button class="btn btn-block btn-danger">{{ $inven->status }}</button>
+                                                @endif
+                                            </div>
 
                                             {{-- Data 1 --}}
                                             <div class="col-lg-6 col-md-12 my-2">
@@ -167,14 +161,14 @@
                                                     </li>
                                                     <li class="list-group-item">
                                                         <div class="row">
-                                                            <div class="col-6">Jumlah Barang</div>
+                                                            <div class="col-6">Jumlah Stok Barang</div>
                                                             <div class="col-6">: {{ $inven->jumlah }}</div>
                                                         </div>
                                                     </li>
                                                     <li class="list-group-item">
                                                         <div class="row">
-                                                            <div class="col-6">Jumlah Stok</div>
-                                                            <div class="col-6">: {{ $inven->stok }}</div>
+                                                            <div class="col-6">Status Barang</div>
+                                                            <div class="col-6">: {{ $inven->status }}</div>
                                                         </div>
                                                     </li>
                                                 </ul>

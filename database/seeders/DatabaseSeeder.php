@@ -50,19 +50,7 @@ class DatabaseSeeder extends Seeder
             'updated_at'    => NULL
         ]);
 
-        // $table->id();
-        // $table->string('kode_barang');
-        // $table->string('nama_barang');
-        // $table->string('merk');
-        // $table->string('spesifikasi');
-        // $table->string('no_seri');
-        // $table->string('tahun');
-        // $table->string('jumlah');
-        // $table->string('kondisi');
-        // $table->string('status');
-        // $table->foreignId('lokasi_id');
-        // $table->timestamps();
-
+        // Default Barang
         Inventaris::create([
             'kode_barang'   => '001',
             'nama_barang'   => 'Laptop Asus Zephyrus',
@@ -71,7 +59,6 @@ class DatabaseSeeder extends Seeder
             'no_seri'       => 'A4X1700',
             'tahun'         => '2023',
             'jumlah'        => 3,
-            'stok'          => 3,
             'kondisi'       => 'Baru',
             'status'        => 'Tersedia',
             'lokasi_id'     => 1,

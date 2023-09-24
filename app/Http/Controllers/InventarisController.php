@@ -80,9 +80,6 @@ class InventarisController extends Controller
             'lokasi_id'     => 'required'
         ]);
 
-        // Fill stock same with 'jumlah'
-        $data['stok'] = $request['jumlah'];
-
         // Auto fill status with 'tersedia'
         $data['status'] = 'Tersedia';
 
@@ -133,8 +130,6 @@ class InventarisController extends Controller
             'keterangan'    => '',
             'lokasi_id'     => ''
         ]);
-
-        $data['stok'] = $inventaris->stok;
 
         Inventaris::where('id', $inventaris->id)
             ->update($data);

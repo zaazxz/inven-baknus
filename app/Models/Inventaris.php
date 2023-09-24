@@ -17,4 +17,8 @@ class Inventaris extends Model
         return $this->belongsTo(Lokasi::class);
     }
 
+    public function peminjaman() {
+        return $this->hasMany(Peminjaman::class);
+    }
+
 }
