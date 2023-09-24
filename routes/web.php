@@ -87,6 +87,8 @@ Route::group(['middleware' => ['auth', 'role:Administrator,Laboran']], function(
     // User Profile Edit
     Route::get('/config/edit/{user}', [PenggunaController::class, 'configedit'])->name('config.pengguna.edit');
     Route::post('/config/update/{user}', [PenggunaController::class, 'configupdate'])->name('config.pengguna.update');
+    Route::get('/pass/edit/{user}', [PenggunaController::class, 'passedit'])->name('pass.pengguna.edit');
+    Route::get('/pass/update/{user}', [PenggunaController::class, 'passupdate'])->name('pass.pengguna.update');
 
     // Auth
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout.auth');

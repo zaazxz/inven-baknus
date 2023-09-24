@@ -7,7 +7,9 @@ use App\Models\Lokasi;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Password;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class PenggunaController extends Controller
@@ -206,8 +208,8 @@ class PenggunaController extends Controller
     public function configedit(User $user) {
 
         return view('backend.pengguna.konfig', [
-            'title'         => 'Edit Data Pengguna',
-            'title_header'  => 'Edit Data Pengguna',
+            'title'         => 'Edit Data ' . auth()->user()->name,
+            'title_header'  => 'Edit Data ' . auth()->user()->name,
             'halaman'       => 'Edit Data',
             'data'          => $user,
             'lokasi'        => Lokasi::where('user_id', $user->id)->get(),
@@ -257,6 +259,42 @@ class PenggunaController extends Controller
             Alert::error('Error', 'Profil gagal diubah!');
             return redirect()->route('home');
         }
+
+    }
+
+    public function passedit(User $user) {
+
+        return view('backend.pengguna.password', [
+            'title'         => 'Edit Password ' . auth()->user()->name,
+            'title_header'  => 'Edit Password ' . auth()->user()->name,
+            'halaman'       => 'Edit Data',
+            'data'          => $user,
+        ]);
+
+    }
+
+    public function passupdate(Request $request) {
+
+        // Validation
+        $request->validate([
+            'current_password'  => 'required',
+            'new_password'      => 'required|confirmed',
+        ]);
+
+        // Match The Old Password
+        if(!Hash::check($request->current_password, auth()->user()->password)){
+
+            Alert::error("error", "Password lama tidak sesuai");
+            return back();
+        }
+
+        // Update the new Password
+        User::whereId(auth()->user()->id)->update([
+            'password' => Hash::make($request->new_password)
+        ]);
+
+        Alert::success('Success', 'Password Berhasil Diubah!');
+        return redirect()->route('home');
 
     }
 }

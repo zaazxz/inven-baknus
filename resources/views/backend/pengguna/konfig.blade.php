@@ -81,7 +81,7 @@
                 </div>
                 <div class="form-group">
                     <label for="lokasi">Pilih Lokasi</label>
-                    <select class="form-control form-control-user" id="lokasi" name="lokasi_id">
+                    <select class="form-control form-control-user" id="lokasi" name="lokasi_id" disabled>
                         @if ($data->lokasi_id)
                             <option value="{{ $data->lokasi_id }}">{{ $data->lokasi->nama_lokasi ?? '' }}</option>
                             @foreach ($lokasi_null as $lokasi)
