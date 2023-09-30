@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>My App</title>
+    <title>Login Page</title>
 
     {{-- Bootstrap --}}
     <link rel="stylesheet" href="{{ asset('bootstrap/css/bootstrap.min.css') }}">
@@ -20,6 +20,9 @@
 
     {{-- Custom styles for this template --}}
     <link href="{{ asset('sb-admin/css/sb-admin-2.min.css') }}" rel="stylesheet">
+
+    {{-- Icon --}}
+    <link rel="shortcut icon" href="{{ asset('image/assets/non-bg-fix.png') }}" type="image/x-icon">
 
     <style>
 
